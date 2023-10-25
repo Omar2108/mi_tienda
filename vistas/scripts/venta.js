@@ -53,6 +53,7 @@ function mostrarform(flag) {
 		//$("#btnGuardar").prop("disabled",false);
 		$("#btnagregar").hide();
 		listarArticulos();
+		consecutivoVentas();
 
 		$("#btnGuardar").hide();
 		$("#btnCancelar").show();
@@ -72,6 +73,7 @@ function mostrarform(flag) {
 function cancelarform() {
 	limpiar();
 	mostrarform(false);
+	location.reload();
 }
 
 //funcion listar
@@ -154,8 +156,6 @@ function mostrar(idventa) {
 
 			$("#idcliente").val(data.idcliente);
 			$("#idcliente").selectpicker('refresh');
-			$("#tipo_comprobante").val(data.tipo_comprobante);
-			$("#tipo_comprobante").selectpicker('refresh');
 			$("#serie_comprobante").val(data.serie_comprobante);
 			$("#num_comprobante").val(data.num_comprobante);
 			$("#fecha_hora").val(data.fecha);
@@ -205,21 +205,10 @@ function anular(idventa) {
 }
 
 //declaramos variables necesarias para trabajar con las compras y sus detalles
-var impuesto = 19;
 var cont = 0;
 var detalles = 0;
 
 $("#btnGuardar").hide();
-$("#tipo_comprobante").change(marcarImpuesto);
-
-function marcarImpuesto() {
-	var tipo_comprobante = $("#tipo_comprobante option:selected").text();
-	if (tipo_comprobante == 'Factura' || tipo_comprobante == 'Ticket') {
-		$("#impuesto").val(impuesto);
-	} else {
-		$("#impuesto").val("0");
-	}
-}
 
 function agregarDetalle(idarticulo, articulo, precio_venta, impuesto, stock) {
 	var cantidad = 1;
@@ -347,30 +336,21 @@ function eliminarDetalle(indice) {
 
 }
 
-$("#tipo_comprobante").change(consecutivoVentas);
 
 function consecutivoVentas() {
-	var tipo_comprobante = $("#tipo_comprobante option:selected").text();
 
-	$.post("../ajax/venta.php?op=selectTipoDocumento", { tipo_comprobante: tipo_comprobante },
-		function (data, status) {
+	$.ajax({
+			url: "../ajax/venta.php?op=consecutivoVenta",
+			type: "GET",
+		})
+		.done(function (data) {
 			data = JSON.parse(data);
+			console.log(data);
 			$("#serie_comprobante").val(data.num_serie);
 			$("#num_comprobante").val(data.num_comprobante);
-
-		});
-
-}
-
-function consecutivoVentas() {
-	var tipo_comprobante = $("#tipo_comprobante option:selected").text();
-
-	$.post("../ajax/venta.php?op=selectTipoDocumento", { tipo_comprobante: tipo_comprobante },
-		function (data, status) {
-			data = JSON.parse(data);
-			$("#serie_comprobante").val(data.num_serie);
-			$("#num_comprobante").val(data.num_comprobante);
-
+		})
+		.fail(function (data) {
+			alert("error: " + data);
 		});
 
 }

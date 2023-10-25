@@ -51,7 +51,7 @@ if (!isset($_SESSION['nombre'])) {
       $logo
     );
 
-    $pdf->fact_dev("$regv->tipo_comprobante ", "$regv->serie_comprobante- $regv->num_comprobante");
+    $pdf->fact_dev("Factura ", "$regv->serie_comprobante- $regv->num_comprobante");
     $pdf->temporaire("");
     $pdf->addDate($regv->fecha);
 
@@ -126,7 +126,7 @@ if (!isset($_SESSION['nombre'])) {
     $pdf->addTVAs($regv->impuesto, $regv->total_venta,$regv->subtotal,$regv->descuento, "$");
     $pdf->addCadreEurosFrancs("IVA ");
     $pdf->Output("FV-$regv->serie_comprobante-$regv->num_comprobante", 'I');
-    $pdf->Output("C:/xampp/htdocs/mi_tienda/facturas/FV-$regv->serie_comprobante-$regv->num_comprobante.pdf", 'F');
+    $pdf->Output("C:/xampp/htdocs/mi_tienda/facturas/factura/FV-$regv->serie_comprobante-$regv->num_comprobante.pdf", 'F');
   } else {
     echo "No tiene permiso para visualizar el reporte";
   }

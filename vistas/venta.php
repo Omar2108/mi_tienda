@@ -39,7 +39,6 @@ if (!isset($_SESSION['nombre'])) {
                     <th>Fecha</th>
                     <th>Cliente</th>
                     <th>Usuario</th>
-                    <th>Documento</th>
                     <th>Número</th>
                     <th>Total Venta</th>
                     <th>Estado</th>
@@ -51,7 +50,6 @@ if (!isset($_SESSION['nombre'])) {
                     <th>Fecha</th>
                     <th>Cliente</th>
                     <th>Usuario</th>
-                    <th>Documento</th>
                     <th>Número</th>
                     <th>Total Venta</th>
                     <th>Estado</th>
@@ -70,14 +68,6 @@ if (!isset($_SESSION['nombre'])) {
                   <div class="form-group col-lg-4 col-md-4 col-xs-12">
                     <label for="">Fecha(*): </label>
                     <input class="form-control" type="date" name="fecha_hora" id="fecha_hora" required>
-                  </div>
-                  <div class="form-group col-lg-6 col-md-6 col-xs-12">
-                    <label for="">Tipo Comprobante(*): </label>
-                    <select name="tipo_comprobante" id="tipo_comprobante" class="form-control selectpicker" required>
-                      <option value="0">--Seleccione el tipo de comprobante--</option>
-                      <option value="Factura">Factura</option>
-                      <option value="Ticket">Ticket</option>
-                    </select>
                   </div>
                   <div class="form-group col-lg-2 col-md-2 col-xs-6">
                     <label for="">Serie: </label>
