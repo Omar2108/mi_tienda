@@ -32,7 +32,7 @@ if (!isset($_SESSION['nombre'])) {
     //obtenemos los datos de la cabecera de la venta actual
     require_once "../modelos/Venta.php";
     $venta = new Venta();
-    $rsptav = $venta->ventacabecera($_GET["id"]);
+    $rsptav = $venta->ventacabecera($_GET["id"], $idempresa);
 
     //recorremos todos los valores que obtengamos
     $regv = $rsptav->fetch_object();

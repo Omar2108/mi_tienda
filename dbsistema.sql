@@ -3,11 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-10-2023 a las 16:15:51
+-- Tiempo de generación: 09-11-2023 a las 16:39:09
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,17 +19,19 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `dbsistema`
+-- Base de datos: `dbsistema_ventas`
 --
+CREATE DATABASE IF NOT EXISTS `dbsistema_ventas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `dbsistema_ventas`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CONSECUTIVO_INGRESO` (IN `tipo` VARCHAR(100), IN `idem` INT)   SELECT serie_comprobante as num_serie, MAX(num_comprobante)+1 as num_comprobante FROM ingreso WHERE tipo_comprobante = tipo and idempresa = idem$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CONSECUTIVO_INGRESO` (IN `tipo` VARCHAR(100), IN `idem` INT)   SELECT if(serie_comprobante IS NULL,'001',serie_comprobante) as num_serie,if(num_comprobante IS NULL, 1, MAX(num_comprobante)+1) as num_comprobante FROM ingreso WHERE tipo_comprobante = tipo and idempresa = idem$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CONSECUTIVO_VENTAS` (IN `tipo` VARCHAR(100), IN `idem` INT)   SELECT serie_comprobante as num_serie, MAX(num_comprobante)+1 as num_comprobante FROM venta 
-WHERE tipo_comprobante = tipo and idempresa = idem$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CONSECUTIVO_VENTAS` (IN `idem` INT)   SELECT IF(serie_comprobante IS NULL, '001', serie_comprobante) as num_serie, IF(num_comprobante IS NULL, 1, MAX(num_comprobante)+1) as num_comprobante FROM venta 
+WHERE idempresa = idem$$
 
 DELIMITER ;
 
@@ -51,7 +54,6 @@ CREATE TABLE `articulo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
-
 -- --------------------------------------------------------
 
 --
@@ -67,8 +69,6 @@ CREATE TABLE `categoria` (
 
 
 
--- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `detalle_ingreso`
 --
@@ -81,8 +81,6 @@ CREATE TABLE `detalle_ingreso` (
   `precio_compra` decimal(11,2) NOT NULL,
   `precio_venta` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
-
 
 --
 -- Disparadores `detalle_ingreso`
@@ -109,7 +107,6 @@ CREATE TABLE `detalle_venta` (
   `precio_venta` decimal(11,2) NOT NULL,
   `descuento` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 
 
 --
@@ -142,7 +139,6 @@ CREATE TABLE `empresa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
-
 -- --------------------------------------------------------
 
 --
@@ -162,7 +158,6 @@ CREATE TABLE `ingreso` (
   `total_compra` decimal(11,2) NOT NULL,
   `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 
 
 -- --------------------------------------------------------
@@ -205,7 +200,6 @@ CREATE TABLE `persona` (
   `telefono` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 
 
 -- --------------------------------------------------------
@@ -254,13 +248,13 @@ CREATE TABLE `usuario_permiso` (
 --
 
 INSERT INTO `usuario_permiso` (`idusuario_permiso`, `idusuario`, `idpermiso`) VALUES
-(99, 3, 1),
-(100, 3, 2),
-(101, 3, 3),
-(102, 3, 4),
-(103, 3, 5),
-(104, 3, 6),
-(105, 3, 7);
+(99, 1, 1),
+(100, 1, 2),
+(101, 1, 3),
+(102, 1, 4),
+(103, 1, 5),
+(104, 1, 6),
+(105, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -273,7 +267,6 @@ CREATE TABLE `venta` (
   `idcliente` int(11) NOT NULL,
   `idusuario` int(11) NOT NULL,
   `idempresa` int(11) DEFAULT NULL,
-  `tipo_comprobante` varchar(20) NOT NULL,
   `serie_comprobante` varchar(7) DEFAULT NULL,
   `num_comprobante` varchar(10) NOT NULL,
   `fecha_hora` datetime NOT NULL,
@@ -394,7 +387,7 @@ ALTER TABLE `detalle_ingreso`
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `iddetalle_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `iddetalle_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
@@ -418,7 +411,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -436,7 +429,7 @@ ALTER TABLE `usuario_permiso`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- Restricciones para tablas volcadas

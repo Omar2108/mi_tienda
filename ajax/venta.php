@@ -40,19 +40,19 @@ switch ($_GET["op"]) {
 
 
 	case 'anular':
-		$rspta = $venta->anular($idventa);
+		$rspta = $venta->anular($idventa, $idempresa);
 		echo $rspta ? "Ingreso anulado correctamente" : "No se pudo anular el ingreso";
 		break;
 
 
 	case 'mostrar':
-		$rspta = $venta->mostrar($idventa);
+		$rspta = $venta->mostrar($idventa, $idempresa);
 		echo json_encode($rspta);
 		break;
 
 	case 'enviar':
 
-		$rsptacl = $venta->mostrar($idventa);
+		$rsptacl = $venta->mostrar($idventa,$idempresa);
 		$regcli = $rsptacl;
 
 		$serial = $regcli['serie_comprobante'];
@@ -139,7 +139,7 @@ switch ($_GET["op"]) {
 		break;
 
 	case 'listar':
-		$rspta = $venta->listar();
+		$rspta = $venta->listar($idempresa);
 		$data = array();
 
 		while ($reg = $rspta->fetch_object()) {

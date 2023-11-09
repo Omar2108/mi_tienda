@@ -340,14 +340,18 @@ function eliminarDetalle(indice) {
 function consecutivoVentas() {
 
 	$.ajax({
-			url: "../ajax/venta.php?op=consecutivoVenta",
-			type: "GET",
-		})
+		url: "../ajax/venta.php?op=consecutivoVenta",
+		type: "GET",
+	})
 		.done(function (data) {
 			data = JSON.parse(data);
 			console.log(data);
+
 			$("#serie_comprobante").val(data.num_serie);
 			$("#num_comprobante").val(data.num_comprobante);
+
+
+
 		})
 		.fail(function (data) {
 			alert("error: " + data);

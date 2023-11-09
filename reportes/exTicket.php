@@ -27,9 +27,10 @@ if (!isset($_SESSION['nombre'])) {
 
 			$venta = new Venta();
 			$id = $_GET["id"];
+			$idempresa = $_SESSION["idempresa"];
 
 			//en el objeto $rspta obtenemos los valores devueltos del metodo ventacabecera del modelo
-			$rspta = $venta->ventacabecera($id);
+			$rspta = $venta->ventacabecera($id, $idempresa);
 
 			$reg = $rspta->fetch_object();
 

@@ -22,8 +22,9 @@ if (!isset($_SESSION['nombre'])) {
 
         $id = $_GET["id"];
         $vendedor = $_SESSION['nombre'];
+        $idempresa = $_SESSION["idempresa"];
 
-        $rspta = $venta->ventacabecera($id);
+        $rspta = $venta->ventacabecera($id, $idempresa);
 
         $reg = $rspta->fetch_object();
 

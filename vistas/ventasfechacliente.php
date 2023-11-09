@@ -51,9 +51,8 @@ if ($_SESSION['consultav']==1) {
       <th>Fecha</th>
       <th>Usuario</th>
       <th>Cliente</th>
-      <th>Comprobante</th>
-      <th>Número</th>
-      <th>Total Ventas</th>
+      <th>Número Venta</th>
+      <th>Total Venta</th>
       <th>Impuesto</th>
       <th>Estado</th>
     </thead>
@@ -63,9 +62,8 @@ if ($_SESSION['consultav']==1) {
       <th>Fecha</th>
       <th>Usuario</th>
       <th>Proveedor</th>
-      <th>Comprobante</th>
-      <th>Número</th>
-      <th>Total Compra</th>
+      <th>Número Venta</th>
+      <th>Total Venta</th>
       <th>Impuesto</th>
       <th>Estado</th>
     </tfoot>   

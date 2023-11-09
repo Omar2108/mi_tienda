@@ -59,14 +59,14 @@ function mostrarform(flag) {
 		detalles = 0;
 		$("#btnAgregarArt").show();
 		form.reset();
-		
+
 
 
 	} else {
 		$("#listadoregistros").show();
 		$("#formularioregistros").hide();
 		$("#btnagregar").show();
-		
+
 	}
 }
 
@@ -207,7 +207,7 @@ function marcarImpuesto() {
 	}
 }
 
-function agregarDetalle(idarticulo, articulo,impuesto) {
+function agregarDetalle(idarticulo, articulo, impuesto) {
 	var cantidad = 1;
 	var precio_compra = 1;
 	var precio_venta = 1;
@@ -285,13 +285,22 @@ $("#tipo_comprobante").change(consecutivoIngreso);
 
 function consecutivoIngreso() {
 	var tipo_comprobante = $("#tipo_comprobante option:selected").text();
-	
+
 	$.post("../ajax/ingreso.php?op=selectTipoDocumento", { tipo_comprobante: tipo_comprobante },
 		function (data, status) {
 			data = JSON.parse(data);
 
-			$("#serie_comprobante").val(data.num_serie);
-			$("#num_comprobante").val(data.num_comprobante);
+			if (data.num_serie == null && data.num_comprobante) {
+				$("#serie_comprobante").val("001");
+				$("#num_comprobante").val("1");
+
+			} else {
+				$("#serie_comprobante").val(data.num_serie);
+				$("#num_comprobante").val(data.num_comprobante);
+
+			}
+
+
 
 		});
 
