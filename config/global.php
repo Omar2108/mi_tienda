@@ -1,4 +1,4 @@
-<?php 
+<?php
 //ip de la pc servidor base de datos
 define("DB_HOST", "localhost");
 
@@ -27,6 +27,11 @@ define("EMAIL", "omar.rchamorro21@gmail.com");
 //email del usuario
 define("PASS_EMAIL", "eapo okbs jvwq hilh");
 
-define("RUTA_GLOBAL","C:/xampp/htdocs/mi_tienda");
- 
- ?>
+define("RUTA_GLOBAL", "C:/xampp/htdocs/mi_tienda");
+
+/*----------  Configuración de moneda  ----------*/
+const MONEDA_SIMBOLO = "$";
+const MONEDA_NOMBRE = "COP";
+const MONEDA_DECIMALES = "2";
+const MONEDA_SEPARADOR_MILLAR = ",";
+const MONEDA_SEPARADOR_DECIMAL = ".";

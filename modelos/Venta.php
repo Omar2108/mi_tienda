@@ -10,8 +10,8 @@ public function __construct(){
 }
 
 //metodo insertar registro
-public function insertar($idcliente,$idusuario,$idempresa,$serie_comprobante,$num_comprobante,$fecha_hora,$impuesto,$subtotal,$total_venta,$idarticulo,$cantidad,$precio_venta,$descuento){
-	$sql="INSERT INTO venta (idcliente,idusuario,idempresa,serie_comprobante,num_comprobante,fecha_hora,impuesto,subtotal,total_venta,estado) VALUES ('$idcliente','$idusuario','$idempresa','$serie_comprobante','$num_comprobante','$fecha_hora','$impuesto','$subtotal','$total_venta','Aceptado')";
+public function insertar($idcliente,$idusuario,$idempresa,$codigo_venta,$serie_comprobante,$num_comprobante,$fecha_hora,$impuesto,$subtotal,$total_venta,$idarticulo,$cantidad,$precio_venta,$descuento){
+	$sql="INSERT INTO venta (idcliente,idusuario,idempresa,codigo_venta,serie_comprobante,num_comprobante,fecha_hora,impuesto,subtotal,total_venta,estado) VALUES ('$idcliente','$idusuario','$idempresa','$codigo_venta','$serie_comprobante','$num_comprobante','$fecha_hora','$impuesto','$subtotal','$total_venta','Aceptado')";
 	//return ejecutarConsulta($sql);
 	 $idventanew=ejecutarConsulta_retornarID($sql);
 	 $num_elementos=0;
@@ -58,7 +58,7 @@ public function listar($idempresa){
 
 
 public function ventacabecera($idventa, $idempresa){
-	$sql= "SELECT v.idventa, v.idcliente, p.nombre AS cliente, p.direccion,p.tipo_documento, p.num_documento, p.email, p.telefono, v.idusuario, u.nombre AS usuario, v.serie_comprobante, v.num_comprobante, v.fecha_hora AS fecha, v.impuesto,v.subtotal, (SELECT SUM(descuento) FROM detalle_venta d WHERE d.idventa = v.idventa) as descuento, v.total_venta FROM venta v 
+	$sql= "SELECT v.idventa, v.idcliente,v.codigo_venta, p.nombre AS cliente, p.direccion,p.tipo_documento, p.num_documento, p.email, p.telefono, v.idusuario, u.nombre AS usuario, v.serie_comprobante, v.num_comprobante, v.fecha_hora AS fecha, v.impuesto,v.subtotal, (SELECT SUM(descuento) FROM detalle_venta d WHERE d.idventa = v.idventa) as descuento, v.total_venta FROM venta v 
 	INNER JOIN persona p ON v.idcliente=p.idpersona 
 	INNER JOIN usuario u ON v.idusuario=u.idusuario
 	WHERE v.idventa ='$idventa' AND v.idempresa = '$idempresa' ";
@@ -82,6 +82,29 @@ function getStock($idarticulo) {
 	$sql= "SELECT stock FROM articulo WHERE idarticulo = '$idarticulo'";
 	return ejecutarConsulta($sql);
 	
+}
+
+public function getVentas(){
+	$sql = "SELECT COUNT(idventa) as num FROM venta";
+	return ejecutarConsulta($sql);
+}
+
+public function generarCodigoAleatorio($longitud,$correlativo){
+	$codigo="";
+	$caracter="Letra";
+	for($i=1; $i<=$longitud; $i++){
+		if($caracter=="Letra"){
+			$letra_aleatoria=chr(rand(ord("a"),ord("z")));
+			$letra_aleatoria=strtoupper($letra_aleatoria);
+			$codigo.=$letra_aleatoria;
+			$caracter="Numero";
+		}else{
+			$numero_aleatorio=rand(0,9);
+			$codigo.=$numero_aleatorio;
+			$caracter="Letra";
+		}
+	}
+	return $codigo."-".$correlativo;
 }
 
 

@@ -32,7 +32,12 @@ $hora = date("h:i:s");
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
 		if (empty($idventa)) {
-			$rspta = $venta->insertar($idcliente, $idusuario, $idempresa, $serie_comprobante, $num_comprobante, $fecha_hora . " " . $hora, $impuesto, $subtotal, $total_venta, $_POST["idarticulo"], $_POST["cantidad"], $_POST["precio_venta"], $_POST["descuento"]);
+			$correlativo = $venta->getVentas();
+			$resul = $correlativo->fetch_object();
+			$correlativo = ($resul->num) + 1;
+			$codigo_venta = $venta->generarCodigoAleatorio(12, $correlativo);
+			
+			$rspta = $venta->insertar($idcliente, $idusuario, $idempresa,$codigo_venta, $serie_comprobante, $num_comprobante, $fecha_hora . " " . $hora, $impuesto, $subtotal, $total_venta, $_POST["idarticulo"], $_POST["cantidad"], $_POST["precio_venta"], $_POST["descuento"]);
 			echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar los datos";
 		} else {
 		}
@@ -147,7 +152,7 @@ switch ($_GET["op"]) {
 
 			$urlt = '../reportes/ticket.php?id=';
 
-			$url = '../reportes/exFactura.php?id=';
+			$url = '../reportes/invoice.php?id=';
 
 
 

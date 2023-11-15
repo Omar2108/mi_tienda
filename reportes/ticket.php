@@ -137,7 +137,7 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->Ln(5);
 
 
-        $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", "*** Precios de productos incluyen impuestos. Para poder realizar un reclamo o devolución debe de presentar este ticket ***"), 0, 'C', false);
+        $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", "*** Los precios de los productos incluyen iva. Para poder realizar un reclamo o devolución debe de presentar este ticket ***"), 0, 'C', false);
 
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(0, 7, iconv("UTF-8", "ISO-8859-1", "¡Gracias por su compra!"), '', 0, 'C');
@@ -145,10 +145,10 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->Ln(9);
 
         # Codigo de barras #
-        $pdf->Code128(5, $pdf->GetY(), $reg->serie_comprobante . " - " . $reg->num_comprobante, 70, 20);
+        $pdf->Code128(5, $pdf->GetY(), $reg->codigo_venta, 70, 20);
         $pdf->SetXY(0, $pdf->GetY() + 21);
         $pdf->SetFont('Arial', '', 14);
-        $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", $reg->serie_comprobante . " - " . $reg->num_comprobante), 0, 'C', false);
+        $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", $reg->codigo_venta), 0, 'C', false);
 
         # Nombre del archivo PDF #
         $pdf->Output("TK-$reg->serie_comprobante-$reg->num_comprobante", 'I');

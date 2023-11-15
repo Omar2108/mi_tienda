@@ -16,7 +16,7 @@ if (!isset($_SESSION['nombre'])) {
 ?>
 
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="height: auto;">
 
       <!-- Main content -->
       <section class="content">
@@ -101,7 +101,7 @@ if (!isset($_SESSION['nombre'])) {
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th>
+                          <th style="width: 20rem;">
                             <h6 id="sub-total">$/ 0.00</h6><input type="hidden" name="subtotal_venta" id="subtotal_venta">
                           </th>
                         </tr>
@@ -113,7 +113,7 @@ if (!isset($_SESSION['nombre'])) {
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th>
+                          <th style="width: 20rem;">
                             <h6 id="iva_total">$/ 0.00</h6><input type="hidden" name="iva" id="iva">
                           </th>
                         </tr>
@@ -124,7 +124,7 @@ if (!isset($_SESSION['nombre'])) {
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th>
+                          <th style="width: 22rem;">
                             <h4 id="total">$/ 0.00</h6><input type="hidden" name="total_venta" id="total_venta">
                           </th>
                         </tr>

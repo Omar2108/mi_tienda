@@ -1,4 +1,4 @@
-$("#frmAcceso").on('submit', function (e) {
+$("#frmAcceso").on('click', function (e) {
         e.preventDefault();
         logina = $("#logina").val();
         clavea = $("#clavea").val();
@@ -6,6 +6,7 @@ $("#frmAcceso").on('submit', function (e) {
         $.post("../ajax/usuario.php?op=verificar",
                 { "logina": logina, "clavea": clavea },
                 function (data) {
+                        console.log(data);
                         if (data != "null") {
                                 $(location).attr("href", "escritorio.php");
                         } else {
