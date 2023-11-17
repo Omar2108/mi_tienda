@@ -19,10 +19,10 @@ if (!isset($_SESSION['nombre'])) {
     <div class="content-wrapper" style="height: auto;">
 
       <!-- Main content -->
-      <section class="content">
+      <section class="content" style="height:auto;">
         <!-- Default box -->
-        <div class="row">
-          <div class="col-md-12">
+        <div class="row" style="height:auto;">
+          <div class="col-md-12" style="height:auto;">
             <div class="box">
               <div class="box-header with-border">
                 <h1 class="box-title">Ventas <button class="btn btn-success" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i>Agregar</button></h1>
@@ -92,6 +92,7 @@ if (!isset($_SESSION['nombre'])) {
                         <th>Descuento</th>
                         <th>Impuesto</th>
                         <th>Subtotal</th>
+                        <th>Accion</th>
                       </thead>
                       <tfoot>
                         <tr>
@@ -101,8 +102,8 @@ if (!isset($_SESSION['nombre'])) {
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th style="width: 20rem;">
-                            <h6 id="sub-total">$/ 0.00</h6><input type="hidden" name="subtotal_venta" id="subtotal_venta">
+                          <th colspan="2">
+                            <p id="sub-total">$/ 0.00</p><input type="hidden" name="subtotal_venta" id="subtotal_venta">
                           </th>
                         </tr>
 
@@ -113,8 +114,8 @@ if (!isset($_SESSION['nombre'])) {
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th style="width: 20rem;">
-                            <h6 id="iva_total">$/ 0.00</h6><input type="hidden" name="iva" id="iva">
+                          <th colspan="2">
+                            <p id="iva_total">$/ 0.00</p><input type="hidden" name="iva" id="iva">
                           </th>
                         </tr>
                         <tr>
@@ -124,8 +125,8 @@ if (!isset($_SESSION['nombre'])) {
                           <th></th>
                           <th></th>
                           <th></th>
-                          <th style="width: 22rem;">
-                            <h4 id="total">$/ 0.00</h6><input type="hidden" name="total_venta" id="total_venta">
+                          <th colspan="2">
+                            <p id="total">$/ 0.00</p><input type="hidden" name="total_venta" id="total_venta">
                           </th>
                         </tr>
 

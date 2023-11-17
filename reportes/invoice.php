@@ -116,8 +116,8 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->SetFillColor(23, 83, 201);
         $pdf->SetDrawColor(23, 83, 201);
         $pdf->SetTextColor(255, 255, 255);
-        $pdf->Cell(15, 8, iconv("UTF-8", "ISO-8859-1", 'Codigo'), 1, 0, 'C', true);
-        $pdf->Cell(70, 8, iconv("UTF-8", "ISO-8859-1", 'Descripción'), 1, 0, 'C', true);
+        $pdf->Cell(30, 8, iconv("UTF-8", "ISO-8859-1", 'Codigo'), 1, 0, 'C', true);
+        $pdf->Cell(55, 8, iconv("UTF-8", "ISO-8859-1", 'Descripción'), 1, 0, 'C', true);
         $pdf->Cell(15, 8, iconv("UTF-8", "ISO-8859-1", 'Cant.'), 1, 0, 'C', true);
         $pdf->Cell(30, 8, iconv("UTF-8", "ISO-8859-1", 'Precio'), 1, 0, 'C', true);
         $pdf->Cell(30, 8, iconv("UTF-8", "ISO-8859-1", 'Descuento'), 1, 0, 'C', true);
@@ -135,8 +135,8 @@ if (!isset($_SESSION['nombre'])) {
 
         while ($regd = $rsptad->fetch_object()) {
 
-            $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", $regd->codigo), 'L', 0, 'C');
-            $pdf->Cell(70, 7, iconv("UTF-8", "ISO-8859-1", $regd->articulo), 'L', 0, 'C');
+            $pdf->Cell(30, 7, iconv("UTF-8", "ISO-8859-1", $regd->codigo), 'L', 0, 'C');
+            $pdf->Cell(55, 7, iconv("UTF-8", "ISO-8859-1", $regd->articulo), 'L', 0, 'C');
             $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", $regd->cantidad), 'L', 0, 'C');
             $pdf->Cell(30, 7, iconv("UTF-8", "ISO-8859-1", MONEDA_SIMBOLO . number_format($regd->precio_venta, MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR)), 'L', 0, 'C');
             $pdf->Cell(30, 7, iconv("UTF-8", "ISO-8859-1", MONEDA_SIMBOLO . number_format($regd->descuento, MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR)), 'LR', 0, 'C');

@@ -107,8 +107,7 @@ function mostrar(idempresa){
 			mostrarform(true);
 
 			$("#nombre-empresa").val(data.nombre);
-            $("#tipo_documento-empresa").val(data.tipo_documento);
-            $("#tipo_documento-empresa").selectpicker('refresh');
+            $("#tipo_documento option[value="+ data.tipo_documento +"]").attr("selected",true);
             $("#num_documento-empresa").val(data.num_documento);
             $("#direccion-empresa").val(data.direccion);
             $("#telefono-empresa").val(data.telefono);

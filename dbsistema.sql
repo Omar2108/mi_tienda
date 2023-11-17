@@ -3,12 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2023 a las 16:39:09
+-- Tiempo de generación: 17-11-2023 a las 20:13:32
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `dbsistema_ventas`
+-- Base de datos: `dbsistema`
 --
-CREATE DATABASE IF NOT EXISTS `dbsistema_ventas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `dbsistema_ventas`;
+CREATE DATABASE IF NOT EXISTS `dbsistema` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `dbsistema`;
 
 DELIMITER $$
 --
@@ -41,8 +40,8 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `articulo`
 --
 
-CREATE TABLE `articulo` (
-  `idarticulo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `articulo` (
+  `idarticulo` int(11) NOT NULL AUTO_INCREMENT,
   `idcategoria` int(11) NOT NULL,
   `codigo` varchar(50) DEFAULT NULL,
   `nombre` varchar(100) NOT NULL,
@@ -50,37 +49,45 @@ CREATE TABLE `articulo` (
   `descripcion` varchar(256) DEFAULT NULL,
   `porce_impuesto` int(11) NOT NULL,
   `imagen` varchar(50) DEFAULT NULL,
-  `condicion` tinyint(4) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `condicion` tinyint(4) DEFAULT 1,
+  PRIMARY KEY (`idarticulo`),
+  UNIQUE KEY `nombre_UNIQUE` (`nombre`),
+  KEY `fk_articulo_categoria_idx` (`idcategoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `categoria`
 --
 
-CREATE TABLE `categoria` (
-  `idcategoria` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `categoria` (
+  `idcategoria` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `descripcion` varchar(256) DEFAULT NULL,
-  `condicion` tinyint(4) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `condicion` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`idcategoria`),
+  UNIQUE KEY `nombre_UNIQUE` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+-- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `detalle_ingreso`
 --
 
-CREATE TABLE `detalle_ingreso` (
-  `iddetalle_ingreso` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `detalle_ingreso` (
+  `iddetalle_ingreso` int(11) NOT NULL AUTO_INCREMENT,
   `idingreso` int(11) NOT NULL,
   `idarticulo` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio_compra` decimal(11,2) NOT NULL,
-  `precio_venta` decimal(11,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `precio_venta` decimal(11,2) NOT NULL,
+  PRIMARY KEY (`iddetalle_ingreso`),
+  KEY `fk_detalle_ingreso_idx` (`idingreso`),
+  KEY `fk_detalle_articulo_idx` (`idarticulo`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
 --
 -- Disparadores `detalle_ingreso`
@@ -99,14 +106,17 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `detalle_venta`
 --
 
-CREATE TABLE `detalle_venta` (
-  `iddetalle_venta` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `detalle_venta` (
+  `iddetalle_venta` int(11) NOT NULL AUTO_INCREMENT,
   `idventa` int(11) NOT NULL,
   `idarticulo` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio_venta` decimal(11,2) NOT NULL,
-  `descuento` decimal(11,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `descuento` decimal(11,2) NOT NULL,
+  PRIMARY KEY (`iddetalle_venta`),
+  KEY `fk_detalle_venta_venta_idx` (`idventa`),
+  KEY `fk_detalle_venta_articulo_idx` (`idarticulo`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 --
@@ -126,8 +136,8 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `empresa`
 --
 
-CREATE TABLE `empresa` (
-  `idempresa` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `empresa` (
+  `idempresa` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `tipo_documento` varchar(20) NOT NULL,
   `num_documento` varchar(20) NOT NULL,
@@ -135,18 +145,17 @@ CREATE TABLE `empresa` (
   `telefono` varchar(20) DEFAULT NULL,
   `email` varchar(300) NOT NULL,
   `imagen` varchar(50) NOT NULL,
-  `condicion` tinyint(4) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `condicion` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`idempresa`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `ingreso`
 --
 
-CREATE TABLE `ingreso` (
-  `idingreso` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ingreso` (
+  `idingreso` int(11) NOT NULL AUTO_INCREMENT,
   `idproveedor` int(11) NOT NULL,
   `idusuario` int(11) DEFAULT NULL,
   `idempresa` int(11) NOT NULL,
@@ -156,9 +165,11 @@ CREATE TABLE `ingreso` (
   `fecha_hora` datetime NOT NULL,
   `impuesto` decimal(4,2) NOT NULL,
   `total_compra` decimal(11,2) NOT NULL,
-  `estado` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
+  `estado` varchar(20) NOT NULL,
+  PRIMARY KEY (`idingreso`),
+  KEY `fk_ingreso_persona_idx` (`idproveedor`),
+  KEY `fk_ingreso_usuario_idx` (`idusuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -166,10 +177,11 @@ CREATE TABLE `ingreso` (
 -- Estructura de tabla para la tabla `permiso`
 --
 
-CREATE TABLE `permiso` (
-  `idpermiso` int(11) NOT NULL,
-  `nombre` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+CREATE TABLE IF NOT EXISTS `permiso` (
+  `idpermiso` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(30) NOT NULL,
+  PRIMARY KEY (`idpermiso`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -190,26 +202,25 @@ INSERT INTO `permiso` (`idpermiso`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `persona`
 --
 
-CREATE TABLE `persona` (
-  `idpersona` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `persona` (
+  `idpersona` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_persona` varchar(20) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `tipo_documento` varchar(20) DEFAULT NULL,
   `num_documento` varchar(20) DEFAULT NULL,
   `direccion` varchar(70) DEFAULT NULL,
   `telefono` varchar(20) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `email` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idpersona`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
-  `idusuario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `tipo_documento` varchar(20) NOT NULL,
   `num_documento` varchar(20) NOT NULL,
@@ -221,8 +232,10 @@ CREATE TABLE `usuario` (
   `login` varchar(20) NOT NULL,
   `clave` varchar(64) NOT NULL,
   `imagen` varchar(50) NOT NULL,
-  `condicion` tinyint(4) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `condicion` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`idusuario`),
+  UNIQUE KEY `login_UNIQUE` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -237,24 +250,27 @@ INSERT INTO `usuario` (`idusuario`, `nombre`, `tipo_documento`, `num_documento`,
 -- Estructura de tabla para la tabla `usuario_permiso`
 --
 
-CREATE TABLE `usuario_permiso` (
-  `idusuario_permiso` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuario_permiso` (
+  `idusuario_permiso` int(11) NOT NULL AUTO_INCREMENT,
   `idusuario` int(11) NOT NULL,
-  `idpermiso` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `idpermiso` int(11) NOT NULL,
+  PRIMARY KEY (`idusuario_permiso`),
+  KEY `fk_u_permiso_usuario_idx` (`idusuario`),
+  KEY `fk_usuario_permiso_idx` (`idpermiso`)
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario_permiso`
 --
 
 INSERT INTO `usuario_permiso` (`idusuario_permiso`, `idusuario`, `idpermiso`) VALUES
-(99, 1, 1),
-(100, 1, 2),
-(101, 1, 3),
-(102, 1, 4),
-(103, 1, 5),
-(104, 1, 6),
-(105, 1, 7);
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -262,174 +278,23 @@ INSERT INTO `usuario_permiso` (`idusuario_permiso`, `idusuario`, `idpermiso`) VA
 -- Estructura de tabla para la tabla `venta`
 --
 
-CREATE TABLE `venta` (
-  `idventa` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `venta` (
+  `idventa` int(11) NOT NULL AUTO_INCREMENT,
   `idcliente` int(11) NOT NULL,
   `idusuario` int(11) NOT NULL,
   `idempresa` int(11) DEFAULT NULL,
+  `codigo_venta` varchar(100) NOT NULL,
   `serie_comprobante` varchar(7) DEFAULT NULL,
   `num_comprobante` varchar(10) NOT NULL,
   `fecha_hora` datetime NOT NULL,
   `impuesto` decimal(11,2) DEFAULT NULL,
   `subtotal` decimal(11,2) NOT NULL,
   `total_venta` decimal(11,2) DEFAULT NULL,
-  `estado` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `articulo`
---
-ALTER TABLE `articulo`
-  ADD PRIMARY KEY (`idarticulo`),
-  ADD UNIQUE KEY `nombre_UNIQUE` (`nombre`),
-  ADD KEY `fk_articulo_categoria_idx` (`idcategoria`);
-
---
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`idcategoria`),
-  ADD UNIQUE KEY `nombre_UNIQUE` (`nombre`);
-
---
--- Indices de la tabla `detalle_ingreso`
---
-ALTER TABLE `detalle_ingreso`
-  ADD PRIMARY KEY (`iddetalle_ingreso`),
-  ADD KEY `fk_detalle_ingreso_idx` (`idingreso`),
-  ADD KEY `fk_detalle_articulo_idx` (`idarticulo`);
-
---
--- Indices de la tabla `detalle_venta`
---
-ALTER TABLE `detalle_venta`
-  ADD PRIMARY KEY (`iddetalle_venta`),
-  ADD KEY `fk_detalle_venta_venta_idx` (`idventa`),
-  ADD KEY `fk_detalle_venta_articulo_idx` (`idarticulo`);
-
---
--- Indices de la tabla `empresa`
---
-ALTER TABLE `empresa`
-  ADD PRIMARY KEY (`idempresa`);
-
---
--- Indices de la tabla `ingreso`
---
-ALTER TABLE `ingreso`
-  ADD PRIMARY KEY (`idingreso`),
-  ADD KEY `fk_ingreso_persona_idx` (`idproveedor`),
-  ADD KEY `fk_ingreso_usuario_idx` (`idusuario`);
-
---
--- Indices de la tabla `permiso`
---
-ALTER TABLE `permiso`
-  ADD PRIMARY KEY (`idpermiso`);
-
---
--- Indices de la tabla `persona`
---
-ALTER TABLE `persona`
-  ADD PRIMARY KEY (`idpersona`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idusuario`),
-  ADD UNIQUE KEY `login_UNIQUE` (`login`);
-
---
--- Indices de la tabla `usuario_permiso`
---
-ALTER TABLE `usuario_permiso`
-  ADD PRIMARY KEY (`idusuario_permiso`),
-  ADD KEY `fk_u_permiso_usuario_idx` (`idusuario`),
-  ADD KEY `fk_usuario_permiso_idx` (`idpermiso`);
-
---
--- Indices de la tabla `venta`
---
-ALTER TABLE `venta`
-  ADD PRIMARY KEY (`idventa`),
-  ADD KEY `fk_venta_persona_idx` (`idcliente`),
-  ADD KEY `fk_venta_usuario_idx` (`idusuario`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `articulo`
---
-ALTER TABLE `articulo`
-  MODIFY `idarticulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT de la tabla `detalle_ingreso`
---
-ALTER TABLE `detalle_ingreso`
-  MODIFY `iddetalle_ingreso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `detalle_venta`
---
-ALTER TABLE `detalle_venta`
-  MODIFY `iddetalle_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT de la tabla `empresa`
---
-ALTER TABLE `empresa`
-  MODIFY `idempresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `ingreso`
---
-ALTER TABLE `ingreso`
-  MODIFY `idingreso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT de la tabla `permiso`
---
-ALTER TABLE `permiso`
-  MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT de la tabla `persona`
---
-ALTER TABLE `persona`
-  MODIFY `idpersona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `usuario_permiso`
---
-ALTER TABLE `usuario_permiso`
-  MODIFY `idusuario_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
-
---
--- AUTO_INCREMENT de la tabla `venta`
---
-ALTER TABLE `venta`
-  MODIFY `idventa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  `estado` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`idventa`),
+  KEY `fk_venta_persona_idx` (`idcliente`),
+  KEY `fk_venta_usuario_idx` (`idusuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Restricciones para tablas volcadas

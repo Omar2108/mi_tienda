@@ -28,7 +28,7 @@ public function insertar($idcliente,$idusuario,$idempresa,$codigo_venta,$serie_c
 }
 
 public function anular($idventa, $idempresa){
-	$sql="UPDATE venta SET estado='Anulado' WHERE idventa='$idventa' AND v.idempresa = '$idempresa'";
+	$sql="UPDATE venta SET estado='Anulado' WHERE idventa='$idventa' AND idempresa = '$idempresa'";
 	return ejecutarConsulta($sql);
 }
 

@@ -108,24 +108,23 @@ function mostrar(idusuario){
 		function(data,status)
 		{
 			data=JSON.parse(data);
+			console.log(data);
 			mostrarform(true);
 
 			$("#nombre").val(data.nombre);
-            $("#tipo_documento").val(data.tipo_documento);
-            $("#tipo_documento").selectpicker('refresh');
+			$("#tipo_documento option[value="+ data.tipo_documento +"]").attr("selected",true);
             $("#num_documento").val(data.num_documento);
             $("#direccion").val(data.direccion);
             $("#telefono").val(data.telefono);
             $("#email").val(data.email);
             $("#cargo").val(data.cargo);
-			$("#empresa").selectpicker('refresh');
             $("#login").val(data.login);
             $("#clave").val(data.clave);
             $("#imagenmuestra").show();
             $("#imagenmuestra").attr("src","../files/usuarios/"+data.imagen);
             $("#imagenactual").val(data.imagen);
             $("#idusuario").val(data.idusuario);
-
+			$("#empresa option[value="+ data.idempresa +"]").attr("selected",true);
 
 		});
 	$.post("../ajax/usuario.php?op=permisos&id="+idusuario, function(r){

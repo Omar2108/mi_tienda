@@ -59,7 +59,9 @@ public function activar($idusuario){
 
 //metodo para mostrar registros
 public function mostrar($idusuario){
-	$sql="SELECT * FROM usuario WHERE idusuario='$idusuario'";
+	$sql="SELECT u.*, e.idempresa, e.nombre FROM usuario u
+	INNER JOIN empresa e ON e.idempresa = u.idempresa
+	WHERE idusuario='$idusuario'";
 	return ejecutarConsultaSimpleFila($sql);
 }
 

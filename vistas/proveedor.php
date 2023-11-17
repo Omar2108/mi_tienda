@@ -60,7 +60,7 @@ if ($_SESSION['compras']==1) {
       <label for="">Tipo Dcumento</label>
      <select class="form-control select-picker" name="tipo_documento" id="tipo_documento" required>
        <option value="CEDULA">CEDULA</option>
-       <option value="NIT">RUC</option>
+       <option value="NIT">NIT</option>
        <option value="CEDULA EXTRANJERIA">CEDULA DE EXTRANJERIA</option>
      </select>
     </div>
