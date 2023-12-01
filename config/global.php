@@ -27,6 +27,7 @@ define("EMAIL", "correo de gmail");
 //clave de aplicaciones del usuario en Gmail 
 define("PASS_EMAIL", "tu clave de aplicaciones de gmail
 
+//ruta raiz principal del proyecto (si cambias a produccion debe ir la ruta raiz del hosting o dominio)
 define("RUTA_GLOBAL", "C:/xampp/htdocs/mi_tienda");
 
 /*----------  Configuración de moneda  ----------*/
