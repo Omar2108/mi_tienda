@@ -19,10 +19,10 @@ define("DB_ENCODE", "utf8");
 define("PRO_NOMBRE", "ITVentas");
 
 //Clave para envio de correos electronicos 
-define("API_KEY_EMAIL", "re_j5stPv9o_5MoUh1gfScwouRAA9Z5BFjJB");
+define("API_KEY_EMAIL", "tu clave de aplicaciones de gmail");
 
 //email del usuario
-define("EMAIL", "omar.rchamorro21@gmail.com");
+define("EMAIL", "correo de gmail");
 
 //email del usuario
 define("PASS_EMAIL", "eapo okbs jvwq hilh");
