@@ -1,2 +1,2 @@
 # sistema-ventas
- Sistema para punto de ventas con PHP y MySQL 
+sistemas de ventas con PHP, MySQL con generación de facturas en formato pdf, ticket, envio de factura con gmail y reportes
