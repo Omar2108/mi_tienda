@@ -19,13 +19,13 @@ define("DB_ENCODE", "utf8");
 define("PRO_NOMBRE", "ITVentas");
 
 //Clave para envio de correos electronicos 
-define("API_KEY_EMAIL", "tu clave de aplicaciones de gmail");
+define("API_KEY_EMAIL", "tu api key del correo");
 
 //email del usuario
 define("EMAIL", "correo de gmail");
 
-//email del usuario
-define("PASS_EMAIL", "eapo okbs jvwq hilh");
+//clave de aplicaciones del usuario en Gmail 
+define("PASS_EMAIL", "tu clave de aplicaciones de gmail
 
 define("RUTA_GLOBAL", "C:/xampp/htdocs/mi_tienda");
 
