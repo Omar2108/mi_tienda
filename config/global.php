@@ -18,6 +18,7 @@ define("DB_ENCODE", "utf8");
 //nombre del proyecto
 define("PRO_NOMBRE", "ITVentas");
 
+//ruta raiz principal del proyecto (si cambias a produccion debe ir la ruta raiz del hosting o dominio)
 define("RUTA_GLOBAL", "C:/xampp/htdocs/mi_tienda");
 
 /*----------  Configuración de moneda  ----------*/
