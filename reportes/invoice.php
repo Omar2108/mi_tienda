@@ -52,7 +52,7 @@ if (!isset($_SESSION['nombre'])) {
 
         $pdf->SetFont('Arial', '', 10);
         $pdf->SetTextColor(39, 39, 51);
-        $pdf->Cell(150, 9, iconv("UTF-8", "ISO-8859-1", "NIT: ".$documento), 0, 0, 'L');
+        $pdf->Cell(150, 9, iconv("UTF-8", "ISO-8859-1", "NIT: " . $documento), 0, 0, 'L');
 
         $pdf->Ln(5);
 
@@ -178,12 +178,33 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", 'NETO A PAGAR'), '', 0, 'C');
         $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", MONEDA_SIMBOLO . number_format($total, MONEDA_DECIMALES, MONEDA_SEPARADOR_DECIMAL, MONEDA_SEPARADOR_MILLAR) . ' ' . MONEDA_NOMBRE), '', 0, 'C');
 
-        $pdf->Ln(12);
+        $pdf->Ln(5);
 
-        $pdf->SetFont('Arial', '', 9);
+        require_once "Letras.php";
+        $V = new EnLetras();
+        $V->substituir_un_mil_por_mil = true;
+
+        $con_letra = strtoupper($V->number_words($total, "PESOS", "Y", "CENTAVOS"));
+
+        $pdf->Cell(13, 7, iconv("UTF-8", "ISO-8859-1", "MONTO EN LETRAS: " . $con_letra), 0, 0);
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Ln(7);
+
+        $pdf->Cell(13, 7, iconv("UTF-8", "ISO-8859-1", "Firma: ___________________________________________________________________"), 0, 0);
+        $pdf->SetTextColor(97, 97, 97);
+
+        $pdf->Ln(7);
+
+        $pdf->Cell(13, 7, iconv("UTF-8", "ISO-8859-1", "Realizada por: " . $_SESSION["nombre"]), 0, 0);
+        $pdf->SetTextColor(97, 97, 97);
+
+        $pdf->Ln(7);
+
+        $pdf->SetFont('Arial', '', 6);
+
 
         $pdf->SetTextColor(39, 39, 51);
-        $pdf->MultiCell(0, 9, iconv("UTF-8", "ISO-8859-1", "*** Precios de productos incluyen iva. Para poder realizar un reclamo o devolución debe de presentar esta factura ***"), 0, 'C', false);
+        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "Acepto el contenido de la presente factura y hago constar el recibido conforme de la mercancia y/o servicio en ella discriminada"), 0, 'C', false);
 
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->Cell(0, 7, iconv("UTF-8", "ISO-8859-1", "¡Gracias por su compra!"), '', 0, 'C');
@@ -196,6 +217,21 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->SetXY(12, $pdf->GetY() + 21);
         $pdf->SetFont('Arial', '', 12);
         $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", $regv->codigo_venta), 0, 'C', false);
+
+        $pdf->Ln(5);
+
+        $pdf->SetFont('Arial', '', 6);
+
+
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "La presente factura de venta tiene carácter de título valor y se rige por la ley 1231 de julio 17/2008. El comprador y el aceptante declara haber recibido real y materialmente las mercancías descritas en este título valor y se obliga a pagar el precio en la forma pactada aquí mismo. Se hace constar que la frma de persona diferente al comprador está autorizada por el comprador para frmar, recibir y confesar la deuda. La mora en el pago causa intereses a la máxima tasa autorizada por la ley."), 0, 'C', false);
+
+        $pdf->Ln(4);
+
+        $pdf->SetFont('Arial', '', 6);
+
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "Autorizo a, " . $empresa . ", a quien presente sus derechos u ostente en el futuro la calidad de acreedor a reportar, procesar, solicitar y divulgar a la central de información fnanciera -CIFIN- que administra la asociación bancaria y entidades fnancieras de Colombia, o cualquier otra entidad que maneje o administre bases de datos con los mismos fines, total la información referente a mi comportamiento comercial."), 0, 'C', false);
 
         $pdf->Output("FV-$regv->serie_comprobante-$regv->num_comprobante", 'I');
         $pdf->Output("C:/xampp/htdocs/mi_tienda/facturas/factura/FV-$regv->serie_comprobante-$regv->num_comprobante.pdf", 'F');;

@@ -73,6 +73,31 @@ switch ($_GET["op"]) {
 		echo json_encode($results);
 		break;
 
+		case 'listarPorAgotar':
+			$rspta=$articulo->listarPorAgotarse();
+			$data=Array();
+			$num = 1;
+	
+			while ($reg=$rspta->fetch_object()) {
+				$data[]=array(
+				"0"=>$num,
+				"1"=>$reg->nombre,
+				"2"=>$reg->categoria,
+				"3"=>$reg->codigo,
+				"4"=>$reg->stock,
+				"5"=>$reg->descripcion,
+				"6"=>"<img src='../files/articulos/".$reg->imagen."' height='50px' width='50px'>"
+				);
+				$num++;
+			}
+			$results=array(
+				 "sEcho"=>1,//info para datatables
+				 "iTotalRecords"=>count($data),//enviamos el total de registros al datatable
+				 "iTotalDisplayRecords"=>count($data),//enviamos el total de registros a visualizar
+				 "aaData"=>$data); 
+			echo json_encode($results);
+			break;
+
 		case 'selectCategoria':
 			require_once "../modelos/Categoria.php";
 			$categoria=new Categoria();

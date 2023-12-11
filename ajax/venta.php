@@ -2,6 +2,8 @@
 require_once "../modelos/Venta.php";
 require_once "../modelos/Persona.php";
 require_once "../config/global.php";
+require_once "../modelos/Empresa.php";
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -12,6 +14,8 @@ if (strlen(session_id()) < 1)
 	session_start();
 
 $venta = new Venta();
+
+$empresa = new Empresa();
 
 
 $mail = new PHPMailer(true);
@@ -63,6 +67,9 @@ switch ($_GET["op"]) {
 		$serial = $regcli['serie_comprobante'];
 		$num = $regcli['num_comprobante'];
 
+		$datos = $empresa->mostrar($idempresa);
+		$datos_empresa = $datos;
+
 		try {
 			//Server settings
 			$mail->SMTPDebug = 0;                      //Enable verbose debug output
@@ -70,8 +77,8 @@ switch ($_GET["op"]) {
 			$mail->CharSet = 'UTF-8';                                            //Send using SMTP
 			$mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
 			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-			$mail->Username   = EMAIL;                     //SMTP username
-			$mail->Password   = PASS_EMAIL;                               //SMTP password
+			$mail->Username   = $datos_empresa["email"];                     //SMTP username
+			$mail->Password   = $datos_empresa["empresa_token_envio"];                               //SMTP password
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 			$mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
