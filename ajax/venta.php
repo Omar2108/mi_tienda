@@ -30,6 +30,7 @@ $fecha_hora = isset($_POST["fecha_hora"]) ? limpiarCadena($_POST["fecha_hora"]) 
 $impuesto = isset($_POST["iva"]) ? limpiarCadena($_POST["iva"]) : "";
 $subtotal = isset($_POST["subtotal_venta"]) ? limpiarCadena($_POST["subtotal_venta"]) : "";
 $total_venta = isset($_POST["total_venta"]) ? limpiarCadena($_POST["total_venta"]) : "";
+$forma_pago = isset($_POST["forma_pago"]) ? limpiarCadena($_POST["forma_pago"]) : "";
 date_default_timezone_set('America/Bogota');
 $hora = date("h:i:s");
 
@@ -41,7 +42,7 @@ switch ($_GET["op"]) {
 			$correlativo = ($resul->num) + 1;
 			$codigo_venta = $venta->generarCodigoAleatorio(12, $correlativo);
 			
-			$rspta = $venta->insertar($idcliente, $idusuario, $idempresa,$codigo_venta, $serie_comprobante, $num_comprobante, $fecha_hora . " " . $hora, $impuesto, $subtotal, $total_venta, $_POST["idarticulo"], $_POST["cantidad"], $_POST["precio_venta"], $_POST["descuento"]);
+			$rspta = $venta->insertar($idcliente, $idusuario, $idempresa,$codigo_venta, $serie_comprobante, $num_comprobante, $fecha_hora . " " . $hora, $impuesto, $subtotal, $total_venta, $_POST["idarticulo"], $_POST["cantidad"], $_POST["precio_venta"], $_POST["descuento"], $forma_pago);
 			echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar los datos";
 		} else {
 		}
@@ -232,8 +233,8 @@ switch ($_GET["op"]) {
 		$regt = $rsptas->fetch_object();
 
 		$results = array(
-			"num_serie" => $regt->num_serie,
-			"num_comprobante" => $regt->num_comprobante
+			"num_serie" => $regt->serie_comprobante,
+			"num_comprobante" => $regt->consecutivo
 		);
 		echo json_encode($results);
 		break;

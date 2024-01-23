@@ -62,7 +62,6 @@ if (!isset($_SESSION['nombre'])) {
                     <label for="">Cliente(*):</label>
                     <input class="form-control" type="hidden" name="idventa" id="idventa">
                     <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true" required>
-
                     </select>
                   </div>
                   <div class="form-group col-lg-4 col-md-4 col-xs-12">
@@ -76,6 +75,16 @@ if (!isset($_SESSION['nombre'])) {
                   <div class="form-group col-lg-2 col-md-2 col-xs-6">
                     <label for="">Número: </label>
                     <input class="form-control" type="text" name="num_comprobante" id="num_comprobante" maxlength="10" placeholder="Número" required>
+                  </div>
+                  <div class="form-group col-lg-8 col-md-8 col-xs-12">
+                    <label for="">Forma de pago(*):</label>
+                    <input class="form-control" type="hidden" name="idventa" id="idventa">
+                    <select name="forma_pago" id="forma_pago" class="form-control selectpicker" data-live-search="true" required>
+                      <option value="Efectivo">Efectivo</option>
+                      <option value="Tarjeta debido">Tarjeta Debido</option>
+                      <option value="Tarjeta credito">Tarjeta Credito</option>
+                      <option value="Transferencia">Transferencia</option>
+                    </select>
                   </div>
                   <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <a data-toggle="modal" href="#myModal">

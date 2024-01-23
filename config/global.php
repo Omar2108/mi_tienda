@@ -18,7 +18,15 @@ define("DB_ENCODE", "utf8");
 //nombre del proyecto
 define("PRO_NOMBRE", "ITVentas");
 
-//ruta raiz principal del proyecto (si cambias a produccion debe ir la ruta raiz del hosting o dominio)
+//Clave para envio de correos electronicos 
+define("API_KEY_EMAIL", "re_j5stPv9o_5MoUh1gfScwouRAA9Z5BFjJB");
+
+//email del usuario
+define("EMAIL", "omar.rchamorro21@gmail.com");
+
+//email del usuario
+define("PASS_EMAIL", "eapo okbs jvwq hilh");
+
 define("RUTA_GLOBAL", "C:/xampp/htdocs/mi_tienda");
 
 /*----------  Configuración de moneda  ----------*/

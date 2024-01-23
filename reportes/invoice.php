@@ -86,6 +86,15 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->SetTextColor(97, 97, 97);
         $pdf->Cell(35, 7, iconv("UTF-8", "ISO-8859-1", strtoupper($regv->serie_comprobante . "-" . $regv->num_comprobante)), 0, 0, 'C');
 
+        $pdf->Ln(7);
+
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->Cell(30, 7, iconv("UTF-8", "ISO-8859-1", 'Forma de pago:'), 0, 0);
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->SetFont('Arial','', 10);
+        $pdf->Cell(120, 8, iconv("UTF-8", "ISO-8859-1", $regv->forma_pago), 0, 0);
+
+
         $pdf->Ln(10);
 
         $pdf->SetFont('Arial', '', 10);
@@ -224,14 +233,14 @@ if (!isset($_SESSION['nombre'])) {
 
 
         $pdf->SetTextColor(39, 39, 51);
-        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "La presente factura de venta tiene carácter de título valor y se rige por la ley 1231 de julio 17/2008. El comprador y el aceptante declara haber recibido real y materialmente las mercancías descritas en este título valor y se obliga a pagar el precio en la forma pactada aquí mismo. Se hace constar que la frma de persona diferente al comprador está autorizada por el comprador para frmar, recibir y confesar la deuda. La mora en el pago causa intereses a la máxima tasa autorizada por la ley."), 0, 'C', false);
+        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "La presente factura de venta tiene carácter de título valor y se rige por la ley 1231 de julio 17/2008. El comprador y el aceptante declara haber recibido real y materialmente las mercancías descritas en este título valor y se obliga a pagar el precio en la forma pactada aquí mismo. Se hace constar que la firma de persona diferente al comprador está autorizada por el comprador para firmar, recibir y confesar la deuda. La mora en el pago causa intereses a la máxima tasa autorizada por la ley."), 0, 'C', false);
 
         $pdf->Ln(4);
 
         $pdf->SetFont('Arial', '', 6);
 
         $pdf->SetTextColor(39, 39, 51);
-        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "Autorizo a, " . $empresa . ", a quien presente sus derechos u ostente en el futuro la calidad de acreedor a reportar, procesar, solicitar y divulgar a la central de información fnanciera -CIFIN- que administra la asociación bancaria y entidades fnancieras de Colombia, o cualquier otra entidad que maneje o administre bases de datos con los mismos fines, total la información referente a mi comportamiento comercial."), 0, 'C', false);
+        $pdf->MultiCell(0, 4, iconv("UTF-8", "ISO-8859-1", "Autorizo a, " . $empresa . ", a quien presente sus derechos u ostente en el futuro la calidad de acreedor a reportar, procesar, solicitar y divulgar a la central de información financiera -CIFIN- que administra la asociación bancaria y entidades financieras de Colombia, o cualquier otra entidad que maneje o administre bases de datos con los mismos fines, total la información referente a mi comportamiento comercial."), 0, 'C', false);
 
         $pdf->Output("FV-$regv->serie_comprobante-$regv->num_comprobante", 'I');
         $pdf->Output("C:/xampp/htdocs/mi_tienda/facturas/factura/FV-$regv->serie_comprobante-$regv->num_comprobante.pdf", 'F');;

@@ -60,6 +60,7 @@ if (!isset($_SESSION['nombre'])) {
         $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", "Fecha: " . $fecha), 0, 'C', false);
         $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", "Caja Nro: 1"), 0, 'C', false);
         $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", "Cajero: " . $vendedor), 0, 'C', false);
+        $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","Forma de pago: ".$reg->forma_pago),0,'C',false);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("Ticket Nro: " . $reg->serie_comprobante . " - " . $reg->num_comprobante)), 0, 'C', false);
         $pdf->SetFont('Arial', '', 9);
