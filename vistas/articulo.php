@@ -21,9 +21,18 @@ if (!isset($_SESSION['nombre'])) {
               <div class="box-header with-border">
                 <h1 class="box-title">Articulo <button class="btn btn-success" onclick="mostrarform(true)" id="btnagregar"><i class="fa fa-plus-circle"></i>Agregar</button> <a target="_blank" href="../reportes/rptarticulos.php"><button class="btn btn-info">Reporte</button></a></h1>
                 <div class="box-tools pull-right">
+                  <label class="form-control" for=""> Seleccionar un archivo excel (*)</label>
+                  <form action="" method="post" id="filesForm" name="filesForm" enctype="multipart/form-data">
+                      <input class="form-control" type="file" name="archivo" id="archivo" accept=".xls, .xlsx">
+                      <button type="button" id="btn_upload" name="btn_upload" class="btn btn-primary form-control">Cargar</button>
+                  
+                  </form>
 
                 </div>
               </div>
+              <br>
+              <br>
+              <br>
               <!--box-header-->
               <!--centro-->
               <div class="panel-body table-responsive" id="listadoregistros">

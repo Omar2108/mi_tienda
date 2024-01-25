@@ -186,4 +186,32 @@ function imprimir(){
 	$("#print").printArea();
 }
 
+
+
+function uploadProductos(){
+
+        var Form = new FormData($('#filesForm')[0]);
+		$.ajax({
+			type: 'POST',
+			url: '../ajax/articulo.php?op=upload',
+			contentType: false,
+			processData: false,
+			data: Form,
+			success:function(response) {
+				
+				$('#fileProducts').val('');
+				bootbox.alert(response);
+				location.reload();
+			}
+		});
+}
+
+$("#btn_upload").click(function(){
+
+	uploadProductos();
+
+});
+        
+    
+
 init();

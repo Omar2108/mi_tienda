@@ -69,4 +69,9 @@ class Articulo
 		WHERE a.stock < 10";
 		return ejecutarConsulta($sql);
 	}
+
+	public function getproducto($nombre){
+		$sql = "SELECT * FROM articulo WHERE nombre='$nombre'";
+		return ejecutarConsulta($sql);
+	}
 }
