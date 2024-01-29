@@ -6,10 +6,18 @@ $("#btnlogin").on('click', function (e) {
         $.post("../ajax/usuario.php?op=verificar",
                 { "logina": logina, "clavea": clavea },
                 function (data) {
-                        if (data != "null") {
+                       
+                        if (!data.includes("Usuario")) {
                                 $(location).attr("href", "escritorio.php");
                         } else {
-                                bootbox.alert("Usuario y/o Password incorrectos");
+
+                                swal({
+                                        title: "Error!",
+                                        text: `${data}` ,
+                                        icon: "error",
+                                        button: "Ok"
+                                });
+                              
                         }
                 });
 })

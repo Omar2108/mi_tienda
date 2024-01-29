@@ -149,7 +149,7 @@ switch ($_GET["op"]) {
 		in_array(7, $valores)?$_SESSION['consultav']=1:$_SESSION['consultav']=0;
 
 	}
-	echo json_encode($fetch);
+	echo $fetch ? json_encode($fetch): "¡Usuario o contraseña incorrectos!";
 
 
 	break;
