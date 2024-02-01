@@ -307,7 +307,7 @@ if (!isset($_SESSION['nombre'])) {
 
     function notificacion() {
       $.get("../ajax/articulo.php?op=listarPorAgotar", function(data, status) {
-        
+
         let datos = JSON.parse(data);
 
         if (datos.aaData.length > 0) {
@@ -327,8 +327,27 @@ if (!isset($_SESSION['nombre'])) {
       });
     }
 
+
     init();
-    notificacion();
+
+    if (localStorage.getItem("estado_toggle")) {
+
+      let estado = localStorage.getItem("estado_toggle");
+      if (estado === "true") {
+        notificacion();
+      }
+      
+    }
+
+
+    document.getElementById('toggle_notificacion').addEventListener("change", () => {
+
+      let estado = localStorage.getItem("estado_toggle");
+      if (estado === "true") {
+        notificacion();
+      }
+
+    });
   </script>
 <?php
 }

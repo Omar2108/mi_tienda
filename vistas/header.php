@@ -1,5 +1,5 @@
  <?php
- header('Content-Type: text/html; charset=UTF-8');
+  header('Content-Type: text/html; charset=UTF-8');
   if (strlen(session_id()) < 1)
     session_start();
 
@@ -10,26 +10,32 @@
  <head>
    <meta charset="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
-   <title>SISVentas | Escritorio</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>SISVentas | <?php $url = explode("/", $_SERVER['REQUEST_URI']);
+                      $arrstring = explode(".", $url[4]);
+                      echo $arrstring[0];
+                      ?></title>
    <!-- Tell the browser to be responsive to screen width -->
    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
    <link rel="shortcut icon" href="../public/img/coffee.ico" />
    <!-- Bootstrap 3.3.7 -->
    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
    <!-- Font Awesome -->
-   
+
 
    <link rel="stylesheet" href="../public/css/font-awesome.min.css">
 
    <link rel="stylesheet" href="../public/css/AdminLTE.min.css">
    <link rel="stylesheet" href="../public/css/_all-skins.min.css">
-  
+
    <!-- DATATABLES-->
    <link rel="stylesheet" href="../public/datatables/jquery.dataTables.min.css">
    <link rel="stylesheet" href="../public/datatables/buttons.dataTables.min.css">
    <link rel="stylesheet" href="../public/datatables/responsive.dataTables.min.css">
    <link rel="stylesheet" href="../public/css/bootstrap-select.min.css">
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/js/bootstrap5-toggle.ecmas.min.js"></script>
 
  </head>
 
@@ -48,10 +54,16 @@
        <nav class="navbar navbar-static-top">
          <!-- Sidebar toggle button-->
          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-           <span class="sr-only">NAVEGACIÓM</span>
+           <span class="sr-only">NAVEGACIÓN</span>
          </a>
 
-         <div class="navbar-custom-menu">
+         <div style="display: flex; flex-direction: row;" class="navbar-custom-menu">
+           <div class="checkbox">
+             <label id="notificacion_toggle">
+               <input id="toggle_notificacion" type="checkbox" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+               Activar Notificaciones
+             </label>
+           </div>
            <ul class="nav navbar-nav">
 
              <li class="dropdown user user-menu">
@@ -221,3 +233,77 @@
        </section>
        <!-- /.sidebar -->
      </aside>
+
+
+     <script>
+       let url = window.location.href;
+
+       if (!url.includes("escritorio")) {
+
+         document.querySelector(".checkbox").style.display = "none";
+
+       }
+       document.querySelector('#toggle_notificacion').bootstrapToggle({
+         onlabel: 'On',
+         offlabel: 'Off'
+       });
+
+       let checked_actual = document.getElementById('toggle_notificacion').checked;
+
+       if (localStorage.getItem("estado_toggle") !== checked_actual.toString()) {
+        document.getElementById('toggle_notificacion').bootstrapToggle('toggle');
+
+        let label = document.getElementById('notificacion_toggle').lastChild;
+
+        label.nodeValue.includes("Activar") ? label.textContent = "Desactivar Notificaciones" : label.textContent = "Activar Notificaciones";
+       }
+
+
+
+       document.getElementById('toggle_notificacion').addEventListener("change", () => {
+
+
+         let checked = document.getElementById('toggle_notificacion').checked;
+         let estado = localStorage.getItem("estado_toggle");
+         if (estado) {
+           localStorage.removeItem("estado_toggle");
+           localStorage.setItem("estado_toggle", checked);
+
+           if (localStorage.getItem("estado_toggle") === "false") {
+             document.getElementById('toggle_notificacion').removeAttribute("checked");
+
+             let notificacion_toggle = document.getElementById('notificacion_toggle');
+
+             notificacion_toggle.lastChild.textContent = "Activar Notificaciones";
+
+           } else {
+
+             notificacion_toggle.lastChild.textContent = "Desactivar Notificaciones";
+
+
+           }
+
+
+         } else {
+
+           localStorage.setItem("estado_toggle", checked);
+
+           if (localStorage.getItem("estado_toggle") === "false") {
+             document.getElementById('toggle_notificacion').removeAttribute("checked");
+
+             let notificacion_toggle = document.getElementById('notificacion_toggle');
+
+             notificacion_toggle.lastChild.textContent = "Habilitar Notificaciones";
+
+           } else {
+
+             notificacion_toggle.lastChild.textContent = "Deshabilitar Notificaciones";
+
+
+           }
+
+         }
+
+
+       })
+     </script>

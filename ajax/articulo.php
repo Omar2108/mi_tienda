@@ -126,8 +126,6 @@ switch ($_GET["op"]) {
 
 		if (in_array($_FILES["archivo"]["type"], $allowedFileType)) {
 
-			move_uploaded_file($_FILES['archivo']['tmp_name'], $_FILES['archivo']['name']);
-
 			$Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
 			$spreadSheet = $Reader->load($_FILES['archivo']['name']);
