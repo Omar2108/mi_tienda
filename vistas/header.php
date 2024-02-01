@@ -293,11 +293,11 @@
 
              let notificacion_toggle = document.getElementById('notificacion_toggle');
 
-             notificacion_toggle.lastChild.textContent = "Habilitar Notificaciones";
+             notificacion_toggle.lastChild.textContent = "Activar Notificaciones";
 
            } else {
 
-             notificacion_toggle.lastChild.textContent = "Deshabilitar Notificaciones";
+             notificacion_toggle.lastChild.textContent = "Desactivar Notificaciones";
 
 
            }
