@@ -153,7 +153,7 @@ if (!isset($_SESSION['nombre'])) {
 
         # Nombre del archivo PDF #
         $pdf->Output("TK-$reg->serie_comprobante-$reg->num_comprobante", 'I');
-        $pdf->Output("C:/xampp/htdocs/mi_tienda/facturas/tickets/TK-$reg->serie_comprobante-$reg->num_comprobante.pdf", 'F');
+        $pdf->Output("C:/xampp/htdocs/xampp/mi_tienda/facturas/tickets/TK-$reg->serie_comprobante-$reg->num_comprobante.pdf", 'F');
     } else {
         echo "No tiene permiso para visualizar el reporte";
     }

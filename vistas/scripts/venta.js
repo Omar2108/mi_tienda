@@ -139,9 +139,14 @@ function guardaryeditar(e) {
 		processData: false,
 
 		success: function (datos) {
-			bootbox.alert(datos);
+
+			data = JSON.parse(datos);
+			
+			bootbox.alert(data[0]);
 			mostrarform(false);
 			listar();
+			window.open(data[1], '_blank');
+			window.open(data[2], '_blank');
 		}
 	});
 

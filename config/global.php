@@ -27,7 +27,7 @@ define("EMAIL", "omar.rchamorro21@gmail.com");
 //email del usuario
 define("PASS_EMAIL", "eapo okbs jvwq hilh");
 
-define("RUTA_GLOBAL", "C:/xampp/htdocs/mi_tienda");
+define("RUTA_GLOBAL", "C:/xampp/htdocs/xampp/mi_tienda");
 
 /*----------  Configuración de moneda  ----------*/
 const MONEDA_SIMBOLO = "$";

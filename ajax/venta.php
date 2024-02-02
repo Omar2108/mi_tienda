@@ -43,7 +43,18 @@ switch ($_GET["op"]) {
 			$codigo_venta = $venta->generarCodigoAleatorio(12, $correlativo);
 			
 			$rspta = $venta->insertar($idcliente, $idusuario, $idempresa,$codigo_venta, $serie_comprobante, $num_comprobante, $fecha_hora . " " . $hora, $impuesto, $subtotal, $total_venta, $_POST["idarticulo"], $_POST["cantidad"], $_POST["precio_venta"], $_POST["descuento"], $forma_pago);
-			echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar los datos";
+
+			$urlt = '../reportes/ticket.php?id='.$rspta[0];
+
+			$url = '../reportes/invoice.php?id='.$rspta[0];
+
+			$respuesta = [
+				"Datos registrados correctamente",
+				$urlt,
+				$url
+			];
+			
+			echo $rspta[1] ? json_encode($respuesta) : "No se pudo registrar los datos";
 		} else {
 		}
 		break;
