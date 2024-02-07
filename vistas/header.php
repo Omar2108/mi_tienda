@@ -20,6 +20,8 @@
    <link rel="shortcut icon" href="../public/img/coffee.ico" />
    <!-- Bootstrap 3.3.7 -->
    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+
+   <link rel="stylesheet" href="../public/css/style.css">
    <!-- Font Awesome -->
 
 
